@@ -9,93 +9,99 @@ public class Moving_1 : MonoBehaviour
         MoveTowad, SmoothDamp, Lerp, Slerp
     }
 
-    //¸ğµç ¿ÀºêÁ§Æ®´Â Æ¯Á¤ ÁöÁ¡À» Á¤ÇØ¼­ ÀÌµ¿
+    //ëª¨ë“  ì˜¤ë¸Œì íŠ¸ëŠ” íŠ¹ì • ì§€ì ì„ ì •í•´ì„œ ì´ë™
 
-    //¿©·¯°¡Áö ÀÌµ¿ ±¸ÇöÇÏ±â
-    [Header("* ¿òÁ÷ÀÓ ¼±ÅÃ")]
+    //ì—¬ëŸ¬ê°€ì§€ ì´ë™ êµ¬í˜„í•˜ê¸°
+    [Header("* ì›€ì§ì„ ì„ íƒ")]
     public int choice_move = 999;
     public Transform target;
     [Space]
 
-    //MoveTowrad  ¹æ½Ä
-    //Vector3.MoveTowards(ÇöÀç À§Ä¡, ¸ñÇ¥ À§Ä¡, ¼Ó·Â)
-    //Á÷¼±À¸·Î ÀÌµ¿ÇÏ´Â ¹æ½Ä 
+    //MoveTowrad  ë°©ì‹
+    //Vector3.MoveTowards(í˜„ì¬ ìœ„ì¹˜, ëª©í‘œ ìœ„ì¹˜, ì†ë ¥)
+    //ì§ì„ ìœ¼ë¡œ ì´ë™í•˜ëŠ” ë°©ì‹ 
     // movement will not overshoot the target
-    //ÇöÀçÀ§Ä¡¿¡¼­ ¸ñÇ¥À§Ä¡ ¹æÇâÀ¸·Î ¼Ó·Â¸¸Å­ ¿òÁ÷ÀÎ´Ù
-    [Header("* MoveTowrad ÀÌµ¿ º¯¼ö")]
+    //í˜„ì¬ìœ„ì¹˜ì—ì„œ ëª©í‘œìœ„ì¹˜ ë°©í–¥ìœ¼ë¡œ ì†ë ¥ë§Œí¼ ì›€ì§ì¸ë‹¤
+    [Header("* MoveTowrad ì´ë™ ë³€ìˆ˜")]
     public float speed = 999;
 
     void MoveTowradMoving()
     {
-        if(speed == 999) { Debug.LogError("MoveTowrad¿¡ speed °ª ¾øÀ½"); return; }
+        if(speed == 999) { Debug.LogError("MoveTowradì— speed ê°’ ì—†ìŒ"); return; }
         float step = speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, target.position, step);
     }
 
-    //SmoothDamp ¹æ½Ä
-    //Vector3.SmoothDamp(ÇöÀç À§Ä¡, ¸ñÇ¥ À§Ä¡, ÂüÁ¶ ¼Ó·Â, ¼Ò¿ä ½Ã°£)
-    //ºÎµå·´°Ô ÀÌµ¿, ¾î´ÀÁ¤µµ Æ÷¹°¼±µµ °¡´ÉÇÏ´Ù°í ÆÇ´Ü
-    //ÀÏ¹İÀûÀÎ ¿ëµµ: Ä«¸Ş¶ó¸¦ ¸Å²ô·´°Ô ¿òÁ÷ÀÏ ¶§
-    [Header("* SmoothDamp ÀÌµ¿ º¯¼ö")]
-    public float smooth_time = 999; //¸ñÇ¥¿¡ µµ´ŞÇÏ´Â µ¥ °É¸®´Â ´ë·«ÀûÀÎ ½Ã°£
+    //SmoothDamp ë°©ì‹
+    //Vector3.SmoothDamp(í˜„ì¬ ìœ„ì¹˜, ëª©í‘œ ìœ„ì¹˜, ì°¸ì¡° ì†ë ¥, ì†Œìš” ì‹œê°„)
+    //ë¶€ë“œëŸ½ê²Œ ì´ë™, ì–´ëŠì •ë„ í¬ë¬¼ì„ ë„ ê°€ëŠ¥í•˜ë‹¤ê³  íŒë‹¨
+    //ì¼ë°˜ì ì¸ ìš©ë„: ì¹´ë©”ë¼ë¥¼ ë§¤ë„ëŸ½ê²Œ ì›€ì§ì¼ ë•Œ
+    [Header("* SmoothDamp ì´ë™ ë³€ìˆ˜")]
+    public float smooth_time = 999; //ëª©í‘œì— ë„ë‹¬í•˜ëŠ” ë° ê±¸ë¦¬ëŠ” ëŒ€ëµì ì¸ ì‹œê°„
     private Vector3 velocity = Vector3.zero;
     void SmoothDampMoving()
     {
-        if (smooth_time == 999) { Debug.LogError("SmoothDamp¿¡ smooth_time °ª ¾øÀ½"); return; }
+        if (smooth_time == 999) { Debug.LogError("SmoothDampì— smooth_time ê°’ ì—†ìŒ"); return; }
 
         transform.position = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smooth_time);
-        //ref velocity È£ÃâÇÒ¶§ ¸¶´Ù ÇÔ¼ö¿¡ ÀÇÇØ ¼öÁ¤ µÊ
+        //ref velocity í˜¸ì¶œí• ë•Œ ë§ˆë‹¤ í•¨ìˆ˜ì— ì˜í•´ ìˆ˜ì • ë¨
     }
 
-    //Lerp(ÇöÀç À§Ä¡, ¸ñÇ¥ À§Ä¡, º¸°£ °£°İ) Linear interpolation ¼±Çü º¸°£!
-    //¹éºĞÀ²(0~1)ÀÌ¹Ç·Î º¸°£°£°İÀÌ 0ÀÌ¸é ÇöÀçÀ§Ä¡, 1ÀÌ¸é ¸ñÇ¥À§Ä¡ÀÓ
-    //º¸°£ °£°İÀ» ÅëÇØ¼­ ¿òÁ÷ÀÓÀ» ºÎµå·´°Ô ¸¸µé°Å³ª, ÀÏÁ¤ÇÑ ÀÌµ¿À» ¸¸µé ¼ö ÀÖÀ½
-    //¿©±â¼­ º¸°£ °£°İÀ» Time.deltaTimeÀ» ¾²±âµµ ÇÔ
+    //Lerp(í˜„ì¬ ìœ„ì¹˜, ëª©í‘œ ìœ„ì¹˜, ë³´ê°„ ê°„ê²©) Linear interpolation ì„ í˜• ë³´ê°„!
+    //ë°±ë¶„ìœ¨(0~1)ì´ë¯€ë¡œ ë³´ê°„ê°„ê²©ì´ 0ì´ë©´ í˜„ì¬ìœ„ì¹˜, 1ì´ë©´ ëª©í‘œìœ„ì¹˜ì„
+    //ë³´ê°„ ê°„ê²©ì„ í†µí•´ì„œ ì›€ì§ì„ì„ ë¶€ë“œëŸ½ê²Œ ë§Œë“¤ê±°ë‚˜, ì¼ì •í•œ ì´ë™ì„ ë§Œë“¤ ìˆ˜ ìˆìŒ
+    //ì—¬ê¸°ì„œ ë³´ê°„ ê°„ê²©ì„ Time.deltaTimeì„ ì“°ê¸°ë„ í•¨
 
-    //¡Ø t °ªÀ» Time.deltaTimeÀ¸·Î ¹Ş¾Æ¿Ã °æ¿ì b ¸ñÇ¥°ª(1)¿¡ ¿µ¿øÈ÷ µµ´ŞÇÏÁö ¸øÇÏ°í 0.9999999....¿¡¼­ °ªÀÌ ¸ØÃß°Ô µÈ´Ù.
-    //µû¶ó¼­ ¸ñÇ¥°ª¿¡ µµ´ŞÇß´ÂÁö ¿©ºÎ¸¦ ÆÄ¾ÇÇÏ·Á¸é " c == 1 "ÀÌ ¾Æ´Ñ,
-    //" c >= 0.99999f " ¿Í °°ÀÌ ÃÖ¼ÒÇÑÀÇ ¿ÀÂ÷¸¦ Æ÷ÇÔÇÏ¿© ÆÇ´ÜÇÔ
+    //â€» t ê°’ì„ Time.deltaTimeìœ¼ë¡œ ë°›ì•„ì˜¬ ê²½ìš° b ëª©í‘œê°’(1)ì— ì˜ì›íˆ ë„ë‹¬í•˜ì§€ ëª»í•˜ê³  0.9999999....ì—ì„œ ê°’ì´ ë©ˆì¶”ê²Œ ëœë‹¤.
+    //ë”°ë¼ì„œ ëª©í‘œê°’ì— ë„ë‹¬í–ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ íŒŒì•…í•˜ë ¤ë©´ " c == 1 "ì´ ì•„ë‹Œ,
+    //" c >= 0.99999f " ì™€ ê°™ì´ ìµœì†Œí•œì˜ ì˜¤ì°¨ë¥¼ í¬í•¨í•˜ì—¬ íŒë‹¨í•¨
 
-    //ÀÏÁ¤ÇÑ ÀÌµ¿À» ¸¸µå´Â °Ç ¸®µë°ÔÀÓ¿¡¼­ ³ëÆ®¸¦ ÂïÀ» ¶§ »ç¿ë
+    //ì¼ì •í•œ ì´ë™ì„ ë§Œë“œëŠ” ê±´ ë¦¬ë“¬ê²Œì„ì—ì„œ ë…¸íŠ¸ë¥¼ ì°ì„ ë•Œ ì‚¬ìš©
 
-    // ¾Æ·¡ ½ÄÃ³·³ »ç¿ë
+    // ì•„ë˜ ì‹ì²˜ëŸ¼ ì‚¬ìš©
     //currentTime += Time.deltaTime;
     //Vector3.Lerp(transform.position, target.position, currentTime / 2);
-    //t °ªÀÌ 100%ÀÌ¸é ¿Ïº®ÇÏ°Ô µµ´ŞÇÑ °ÍÀ» ÀÇ¹ÌÇÑ´Ù.
-    //Áï, currentTimeÀ» 0, 1, 2Ã³·³ °è¼Ó ´Ã·ÁÁÖ°í / 2 ÇØÁÖ¸é 1, °á±¹ 100%°¡ µÈ´Ù.
-    //// ¾ËÆÄºí·»µù
+    //t ê°’ì´ 100%ì´ë©´ ì™„ë²½í•˜ê²Œ ë„ë‹¬í•œ ê²ƒì„ ì˜ë¯¸í•œë‹¤.
+    //ì¦‰, currentTimeì„ 0, 1, 2ì²˜ëŸ¼ ê³„ì† ëŠ˜ë ¤ì£¼ê³  / 2 í•´ì£¼ë©´ 1, ê²°êµ­ 100%ê°€ ëœë‹¤.
+    //// ì•ŒíŒŒë¸”ë Œë”©
     //c=(1 - a) * s + a* T
-    //ÆäÀÌµåÀÎ ÆäÀÌµå ¾Æ¿ô½Ã »ö»óÀ¸·Î ¸¸µé ¶§ ÀÌ·¸°Ô ¼±Çüº¸°£À¸·Î »öÀ» ¹Ù²ãÁÜ
+    //í˜ì´ë“œì¸ í˜ì´ë“œ ì•„ì›ƒì‹œ ìƒ‰ìƒìœ¼ë¡œ ë§Œë“¤ ë•Œ ì´ë ‡ê²Œ ì„ í˜•ë³´ê°„ìœ¼ë¡œ ìƒ‰ì„ ë°”ê¿”ì¤Œ
     //c(color), a(alpha)
-    //°á°ú color = color1 * weight1 + color2*weight2; -µÎ »ö»óÀ» ÀûÀıÇÏ°Ô ¼¯´Â ºí·£µù
-    //// 1-a °¡ 0ÀÌ¸é ±âº» »ö, Á¡Á¡ Ä¿Áö¸é ¼¯ÀÓ
-    //¾Ö´Ï¸ŞÀÌ¼Ç ¿òÁ÷ÀÓ¿¡µµ ÀÌ ÇÔ¼ö »ç¿ëÇØ ´Ù¾çÇÑ ÀÌµ¿ Ç¥Çö
+    //ê²°ê³¼ color = color1 * weight1 + color2*weight2; -ë‘ ìƒ‰ìƒì„ ì ì ˆí•˜ê²Œ ì„ëŠ” ë¸”ëœë”©
+    //// 1-a ê°€ 0ì´ë©´ ê¸°ë³¸ ìƒ‰, ì ì  ì»¤ì§€ë©´ ì„ì„
+    //ì• ë‹ˆë©”ì´ì…˜ ì›€ì§ì„ì—ë„ ì´ í•¨ìˆ˜ ì‚¬ìš©í•´ ë‹¤ì–‘í•œ ì´ë™ í‘œí˜„
 
-    [Header("* Lerp ÀÌµ¿ º¯¼ö")]
-    public float L_interpolation_length = 999; //º¸°£ °ªÀÌ ÀÛÀ»¼ö·Ï ºÎµå·¯¿î ¿òÁ÷ÀÓ
+    [Header("* Lerp ì´ë™ ë³€ìˆ˜")]
+    public float L_interpolation_length = 999; //ë³´ê°„ ê°’ì´ ì‘ì„ìˆ˜ë¡ ë¶€ë“œëŸ¬ìš´ ì›€ì§ì„
 
     void LerpMoving()
     {
-        if (L_interpolation_length == 999) { Debug.LogError("Lerp¿¡ L_interpolation_length °ª ¾øÀ½"); return; }
+        if (L_interpolation_length == 999) { Debug.LogError("Lerpì— L_interpolation_length ê°’ ì—†ìŒ"); return; }
 
         transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
     }
 
-    //Slerp (ÇöÀç À§Ä¡, ¸ñÇ¥ À§Ä¡, º¸°£ °£°İ) - ±¸¸é º¸°£ ±¸ÀÇ °Ñ¸éÀ» µû¶ó°£´Ù »ı°¢ÇÏ¸éµÊ
-    //³»ºÎ°è»ê¿¡ µû¶ó ¼±ÇüÀ¸·Îµµ °¡´Ï ÁÖÀÇ
-    [Header("* Slerp ÀÌµ¿ º¯¼ö")]
-    public float SL_interpolation_length = 999; //º¸°£ °ªÀÌ ÀÛÀ»¼ö·Ï ºÎµå·¯¿î ¿òÁ÷ÀÓ
+    //Slerp (í˜„ì¬ ìœ„ì¹˜, ëª©í‘œ ìœ„ì¹˜, ë³´ê°„ ê°„ê²©) - êµ¬ë©´ ë³´ê°„ êµ¬ì˜ ê²‰ë©´ì„ ë”°ë¼ê°„ë‹¤ ìƒê°í•˜ë©´ë¨
+    //ë‚´ë¶€ê³„ì‚°ì— ë”°ë¼ ì„ í˜•ìœ¼ë¡œë„ ê°€ë‹ˆ ì£¼ì˜
+    [Header("* Slerp ì´ë™ ë³€ìˆ˜")]
+    public float SL_interpolation_length = 999; //ë³´ê°„ ê°’ì´ ì‘ì„ìˆ˜ë¡ ë¶€ë“œëŸ¬ìš´ ì›€ì§ì„
     void SlerpMoving()
     {
-        if (SL_interpolation_length == 999) { Debug.LogError("Slerp¿¡ SL_interpolation_length °ª ¾øÀ½"); return; }
+        if (SL_interpolation_length == 999) { Debug.LogError("Slerpì— SL_interpolation_length ê°’ ì—†ìŒ"); return; }
 
         transform.position = Vector3.Slerp(transform.position, target.position, 0.01f);
     }
 
+    private Animator my_anim;
+    private void Start()
+    {
+        my_anim = GetComponentInChildren<Animator>();
+
+    }
     private void Update()
     {
-        if (choice_move == 999) { Debug.LogError("choice_move °ª ¾øÀ½"); return; }
-        if (target == null) { Debug.LogError("target °ª ¾øÀ½"); return; }
+        if (choice_move == 999) { Debug.LogError("choice_move ê°’ ì—†ìŒ"); return; }
+        if (target == null) { Debug.LogError("target ê°’ ì—†ìŒ"); return; }
 
         switch (choice_move)
         {
