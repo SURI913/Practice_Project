@@ -78,7 +78,7 @@ public class Moving_1 : MonoBehaviour
     {
         if (L_interpolation_length == 999) { Debug.LogError("Lerp에 L_interpolation_length 값 없음"); return; }
 
-        transform.position = Vector3.Lerp(transform.position, target.position, 0.001f);
+        transform.position = Vector3.Lerp(transform.position, target.position, L_interpolation_length);
     }
 
     //Slerp (현재 위치, 목표 위치, 보간 간격) - 구면 보간 구의 겉면을 따라간다 생각하면됨
@@ -88,16 +88,9 @@ public class Moving_1 : MonoBehaviour
     void SlerpMoving()
     {
         if (SL_interpolation_length == 999) { Debug.LogError("Slerp에 SL_interpolation_length 값 없음"); return; }
-
-        transform.position = Vector3.Slerp(transform.position, target.position, 0.01f);
+        transform.position = Vector3.Slerp(transform.position, target.position, SL_interpolation_length);
     }
 
-    private Animator my_anim;
-    private void Start()
-    {
-        my_anim = GetComponentInChildren<Animator>();
-
-    }
     private void Update()
     {
         if (choice_move == 999) { Debug.LogError("choice_move 값 없음"); return; }
