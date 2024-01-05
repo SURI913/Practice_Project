@@ -1,7 +1,9 @@
-using System.Collections;
+using DG.Tweening;
+using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor.U2D.Path;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Moving_bullet : MonoBehaviour
 {
@@ -11,7 +13,15 @@ public class Moving_bullet : MonoBehaviour
     [Range(-100, 5)]
     public float offset;
     [Header("* Slerp 이동 변수")]
-    public float SL_count = 1000; //
+    public float SL_count = 1000;
+
+
+    //----------------------DoTween
+    //땅에 닫기까지 걸리는 시간
+    [Header("* 점프하는 힘 / 시간 / 그래프")]
+    public float force;
+    public float timer;
+    public Ease ease_type;
     IEnumerable<Vector3> SlerpMoving( Vector3 start, Vector3 end, float center_offset)
     {
         var center_pivot = (start + end) * 0.5f;
@@ -25,9 +35,18 @@ public class Moving_bullet : MonoBehaviour
 
         for (var i = 0f; i < 1 + f; i += f)
         {
-            yield return Vector3.Slerp(start_relative_center, end_relative_center, 0.05f) + center_pivot;
+            yield return Vector3.Slerp(start_relative_center, end_relative_center, 0.05f*Time.deltaTime) + center_pivot;
         }
         
+    }
+
+    void DoTweenMoving()
+    {
+        transform.DOLocalJump( target.position, force, 1, timer).SetEase(ease_type).SetLoops(-1, LoopType.Restart);
+
+        //transform.DOMove(Vector3 목표값, float 변화시간, (bool 정수단위 이동여부));
+        //.SetEase(Ease easeType / AnimationCurve animCurve / EaseFunction customEase)
+        //.SetLoops(int loops, LoopType loopType = LoopType.Restart) : 변환을 반복하는 기능
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -51,10 +70,15 @@ public class Moving_bullet : MonoBehaviour
 
     private void Update()
     {
-        foreach (var point in SlerpMoving(transform.position, target.position, offset))
+        /*foreach (var point in SlerpMoving(transform.position, target.position, offset))
         {
-            
+
             transform.position = point;
-        }
+        }*/
+    }
+
+    private void Start()
+    {
+        DoTweenMoving();
     }
 }
