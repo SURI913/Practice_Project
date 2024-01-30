@@ -35,7 +35,7 @@ public class Moving_bullet : MonoBehaviour
 
         for (var i = 0f; i < 1 + f; i += f)
         {
-            yield return Vector3.Slerp(start_relative_center, end_relative_center, 0.05f*Time.deltaTime) + center_pivot;
+            yield return Vector3.Slerp(start_relative_center, end_relative_center, 0.05f) + center_pivot;
         }
         
     }
@@ -70,15 +70,15 @@ public class Moving_bullet : MonoBehaviour
 
     private void Update()
     {
-        /*foreach (var point in SlerpMoving(transform.position, target.position, offset))
+        foreach (var point in SlerpMoving(transform.position, target.position, offset))
         {
 
             transform.position = point;
-        }*/
+        }
     }
 
     private void Start()
     {
-        DoTweenMoving();
+        //DoTweenMoving();
     }
 }
