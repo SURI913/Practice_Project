@@ -6,18 +6,15 @@ public class Test : MonoBehaviour
 {
     public Vector2 check_size;
     public LayerMask checkLayers;
-
+    public Collider2D[] colliders { get; set; }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        colliders = Physics2D.OverlapBoxAll(transform.position, check_size, 0f, checkLayers);
+        Array.Sort(colliders, new DistanceComparer(transform));
+
+        foreach (Collider2D item in colliders)
         {
-            Collider2D[ ] colliders = Physics2D.OverlapBoxAll(transform.position, check_size, 0f ,checkLayers);
-            Array.Sort(colliders, new DistanceComparer(transform));
-            
-            foreach (Collider2D item in colliders)
-            {
-                Debug.Log(item.name);
-            }
+            Debug.Log(item.name);
         }
     }
 

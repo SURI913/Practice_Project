@@ -7,7 +7,7 @@ using UnityEngine.Animations;
 
 public class Moving_bullet : MonoBehaviour
 {
-    public Transform target;
+    Transform target;
     [Space]
     [Header("* 호 크기")]
     [Range(-100, 5)]
@@ -70,15 +70,17 @@ public class Moving_bullet : MonoBehaviour
 
     private void Update()
     {
+        target = my_parent.colliders[0].transform;
         foreach (var point in SlerpMoving(transform.position, target.position, offset))
         {
 
             transform.position = point;
         }
     }
-
+    private Test my_parent;
     private void Start()
     {
+        my_parent = GetComponentInParent<Test>();
         //DoTweenMoving();
     }
 }
